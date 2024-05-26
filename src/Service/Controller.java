@@ -9,6 +9,7 @@ package Service;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -54,11 +55,11 @@ public class Controller<T> {
         }
     }
 
-    public void xoa(int id) {
+    public void xoa(String id) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            T t = findById(id);
+            T t = findById(Integer.parseInt(id));
             if (t != null) {
                 em.remove(em.contains(t) ? t : em.merge(t));
             }
@@ -101,7 +102,7 @@ public class Controller<T> {
         em.close();
     }
 }
-    public List<T> timkiem(String keyword) {
+    public DefaultTableModel timkiem(DefaultTableModel model,String keyword,String[] methodNames) {
         EntityManager em = getEntityManager();
         try {
             String queryStr = "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE ";
@@ -109,7 +110,8 @@ public class Controller<T> {
             List<String> conditions = new ArrayList<>();
 
             for (Field field : fields) {
-                if (!field.getName().equals("serialVersionUID") && !field.getName().equals("enrollmentCollection")) {
+                if (!field.getName().equals("serialVersionUID") && !field.getName().equals("enrollmentCollection")
+                        &&!Collection.class.isAssignableFrom(field.getType())) {
                     conditions.add("e." + field.getName() + " LIKE :keyword");
                 }
             }
@@ -117,15 +119,15 @@ public class Controller<T> {
 
             TypedQuery<T> query = em.createQuery(queryStr, entityClass);
             query.setParameter("keyword", "%" + keyword + "%");
-            return query.getResultList();
+            List<T> t= query.getResultList();
+            return xuly(model,methodNames,t);
         } finally {
             em.close();
         }
     }
-     public DefaultTableModel loaddata(DefaultTableModel model,String[] methodNames){
-        List<T> t = getAll();
-       Method[] methods = new Method[methodNames.length];
-
+    DefaultTableModel xuly(DefaultTableModel model,String[] methodNames,List<T> t){
+         Method[] methods = new Method[methodNames.length];
+         model.setRowCount(0);
         try {
             for (int i = 0; i < methodNames.length; i++) {
                 methods[i] = entityClass.getMethod(methodNames[i]);
@@ -138,16 +140,21 @@ public class Controller<T> {
                 }
                 model.addRow(rowData);
             }
+             
         } catch (Exception e) {
- e.printStackTrace();            
+            e.printStackTrace();            
         }
 
         return model;
     }
-    public void clear(JTextField []list){
-        for(int i=0;i<0;i++){
+     public DefaultTableModel loaddata(DefaultTableModel model,String[] methodNames){
+        List<T> t = getAll();
+        return xuly(model,methodNames,t);
+    }
+    public void clear(JTextField []list,DefaultTableModel model){
+        for(int i=0;i<list.length;i++){
             list[i].setText("");
         }
-        
+         model.setRowCount(0);
     }
 }
