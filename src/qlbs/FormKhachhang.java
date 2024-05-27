@@ -8,6 +8,8 @@ package qlbs;
 
 import Service.Controller;
 import Service.Khachhang;
+import Utils.DateUtils;
+import com.toedter.calendar.JDateChooser;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,14 +36,16 @@ public class FormKhachhang extends javax.swing.JFrame {
         loaddata();
     }
     void loaddata(){
-
-     ketnoi.loaddata(model, new String[]{"getMaKH","getTenKH","getGioiTinh", "getNgaySinh"
-             ,"getDienThoaiKH","getDiaChiKh"});
+     
+     ketnoi.loaddata(model, new String[]{"getMaKH","getTenKH", "getDiaChiKh",
+         "getDienThoaiKH", "getNgaySinh", "getGioiTinh"});
        
     }
     void clear(){
        ketnoi.clear(new JTextField[]{ txt_diachi,txt_ma,txt_dienthoai,
            txt_ten,txt_timkiem},model);
+       
+       setDateToCurrent(txt_ngaysinh);
     }
 
     /**
@@ -77,6 +81,7 @@ public class FormKhachhang extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(400, 60));
 
         btn_them.setText("Thêm");
         btn_them.addActionListener(new java.awt.event.ActionListener() {
@@ -134,22 +139,23 @@ public class FormKhachhang extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
+                        .addGap(118, 118, 118)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel2)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel4)
-                        .addGap(40, 40, 40)))
+                        .addGap(65, 65, 65))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
+                        .addGap(28, 28, 28)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(rd_nam)
@@ -166,7 +172,7 @@ public class FormKhachhang extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txt_diachi, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                            .addComponent(txt_diachi, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                                             .addComponent(txt_dienthoai))
                                         .addGap(263, 263, 263)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,7 +189,7 @@ public class FormKhachhang extends javax.swing.JFrame {
                                     .addComponent(btn_xoa))
                                 .addGap(62, 62, 62))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                        .addGap(0, 0, 0)
                         .addComponent(txt_ngaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -193,14 +199,17 @@ public class FormKhachhang extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_ma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(19, 19, 19)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txt_ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rd_nam)
                             .addComponent(rd_nu)
@@ -233,7 +242,7 @@ public class FormKhachhang extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã Khách hàng", "Tên khách hàng", "Giới tính", "Ngày sinh", "Điện thoại", "Địa chỉ"
+                "Mã Khách hàng", "Tên khách hàng", "Địa chỉ", "Số điện thoại", "Ngày sinh", "Giới tính"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -305,8 +314,8 @@ public class FormKhachhang extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(txt_timkiem.getText()!=""){
             
-            ketnoi.timkiem(model, txt_timkiem.getText(), new String[]{"getMaKH","getTenKH","getGioiTinh","getDiaChiKh", "getNgaySinh"
-             ,"getDienThoaiKH"});
+            ketnoi.timkiem(model, txt_timkiem.getText(), new String[]{"getMaKH","getTenKH", "getDiaChiKh",
+         "getDienThoaiKH", "getNgaySinh", "getGioiTinh"});
    
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -317,30 +326,29 @@ public class FormKhachhang extends javax.swing.JFrame {
         if(row>=0){
              int  id= Integer.parseInt(jTable1.getValueAt(row, 0).toString()) ;
             txt_ma.setText(String.valueOf(id));
-            txt_diachi.setText(jTable1.getValueAt(row, 5).toString());
+            txt_diachi.setText(jTable1.getValueAt(row, 2).toString());
           
           
            
             txt_ten.setText(jTable1.getValueAt(row, 1).toString());
-            if (jTable1.getValueAt(row, 2).toString().equals("Nam")) {
+            if (jTable1.getValueAt(row, 5).toString().equals("Nam")) {
                 rd_nam.setSelected(true);
             } else {
                     rd_nu.setSelected(true);
               }
-            txt_dienthoai.setText(jTable1.getValueAt(row, 4).toString());
-              try {
-                    String dateString = jTable1.getValueAt(row, 3).toString();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                    java.util.Date date = dateFormat.parse(dateString);
-                    txt_ngaysinh.setDate(date);
-                } catch (ParseException ex) {
-                    JOptionPane.showMessageDialog(null, "Invalid date format.");
-                };
+            txt_dienthoai.setText(jTable1.getValueAt(row, 3).toString());
+            
+            java.util.Date ngaySinh = DateUtils.parseDate(jTable1.getValueAt(row, 4).toString());
+            txt_ngaysinh.setDate(ngaySinh);
      
         }
       
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void setDateToCurrent(JDateChooser dateChooser) {
+        dateChooser.setDate(new java.util.Date()); // Đặt ngày hiện tại
+    }
+    
     /**
      * @param args the command line arguments
      */
