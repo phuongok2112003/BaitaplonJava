@@ -7,6 +7,7 @@
 package Service;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -75,8 +76,9 @@ public class Hoadonban implements Serializable {
         this.soHoaDon = soHoaDon;
     }
 
-    public Date getNgayHoaDon() {
-        return ngayHoaDon;
+    public String getNgayHoaDon() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        return sdf.format(ngayHoaDon);
     }
 
     public void setNgayHoaDon(Date ngayHoaDon) {

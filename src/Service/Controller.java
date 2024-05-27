@@ -31,6 +31,9 @@ public class Controller<T> {
         entityClass = t;
         emf = Persistence.createEntityManagerFactory("QLBSPU");
     }
+    public Controller(){
+         emf = Persistence.createEntityManagerFactory("QLBSPU");
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -157,4 +160,28 @@ public class Controller<T> {
         }
          model.setRowCount(0);
     }
+//     public List<Object[]> executeJoinQuery(String queryStr, Map<String, Object> parameters) {
+//        EntityManager em = getEntityManager();
+//        try {
+//            TypedQuery<Object[]> query = em.createQuery(queryStr, Object[].class);
+//            for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+//                query.setParameter(entry.getKey(), entry.getValue());
+//            }
+//            return query.getResultList();
+//        } finally {
+//            em.close();
+//        }
+//    }
+//
+//    public DefaultTableModel loadJoinData(DefaultTableModel model, String queryStr, Map<String
+//            , Object> parameters) {
+//        List<Object[]> results = executeJoinQuery(queryStr, parameters);
+//        model.setRowCount(0); // Clear existing rows
+//
+//        for (Object[] row : results) {
+//            model.addRow(row);
+//        }
+//
+//        return model;
+//    }
 }

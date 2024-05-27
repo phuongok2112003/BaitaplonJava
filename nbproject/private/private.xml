@@ -5,6 +5,11 @@
         <group>
             <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/Nhanvien.java</file>
             <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/Khachhang.java</file>
+<<<<<<< HEAD
+=======
+            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/qlbs/QLBS.java</file>
+            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/qlbs/FormBanHang.java</file>
+>>>>>>> 96152a0 (formhoadon)
             <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/Controller.java</file>
         </group>
     </open-files>
