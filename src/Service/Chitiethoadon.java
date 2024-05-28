@@ -52,7 +52,9 @@ public class Chitiethoadon implements Serializable {
     public Chitiethoadon(int soHoaDon, int maSach) {
         this.chitiethoadonPK = new ChitiethoadonPK(soHoaDon, maSach);
     }
-
+    public String getinforChiTiet(){
+        return hoadonban.getSoHoaDon().toString() ;
+    }
     public ChitiethoadonPK getChitiethoadonPK() {
         return chitiethoadonPK;
     }
@@ -72,7 +74,7 @@ public class Chitiethoadon implements Serializable {
     public Hoadonban getHoadonban() {
         return hoadonban;
     }
-
+    
     public void setHoadonban(Hoadonban hoadonban) {
         this.hoadonban = hoadonban;
     }
@@ -80,7 +82,9 @@ public class Chitiethoadon implements Serializable {
     public Sach getSach() {
         return sach;
     }
-
+    public String getInfoSach(){
+        return getSach().getMaSach().toString()+"-"+getSach().getTenSach().toString();
+    }
     public void setSach(Sach sach) {
         this.sach = sach;
     }

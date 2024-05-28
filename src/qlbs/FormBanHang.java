@@ -10,10 +10,14 @@ import Service.Controller;
 import Service.Hoadonban;
 import Service.Khachhang;
 import Service.Nhanvien;
+import Utils.DateUtils;
+import Utils.Xuly;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,7 +40,11 @@ public class FormBanHang extends javax.swing.JFrame {
     public FormBanHang() {
         initComponents();
         model=(DefaultTableModel) jTable1.getModel();
-       txt_Nhanvien.setText("");
+       txt_Nhanvien.setText("3-a");
+               for(Khachhang khach:listkhach){
+//            cb_kh.addItem(khach.getMaKH()+"-"+khach.getTenKH());
+            cb_kh.addItem(khach.getMaKH()+"-"+khach.getTenKH());
+        }
         loaddata();
     
 
@@ -50,14 +58,12 @@ public class FormBanHang extends javax.swing.JFrame {
      */
     void clear(){
         ketnoi.clear(new JTextField[]{txt_sohoadon}, model);
+        
     }
     void loaddata(){
-       
-        for(Khachhang khach:listkhach){
-//            cb_kh.addItem(khach.getMaKH()+"-"+khach.getTenKH());
-            cb_kh.addItem(khach.getMaKH());
-        }
-        model=ketnoi.loaddata(model,new String[]{"getSoHoaDon","getMaKH.getTenKH","getMaNhanVien.getTenNV","getNgayHoaDon"});
+        txt_Nhanvien.setText("4-a");
+
+        model=ketnoi.loaddata(model,new String[]{"getSoHoaDon","getinfoKhachhang","getinfoNhanvien","getNgayHoaDon"});
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -136,6 +142,11 @@ public class FormBanHang extends javax.swing.JFrame {
         });
 
         btn_chitiet.setText("Xem chi tiết");
+        btn_chitiet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_chitietActionPerformed(evt);
+            }
+        });
 
         btn_thanhtoan.setText("Thanh toán");
 
@@ -167,19 +178,19 @@ public class FormBanHang extends javax.swing.JFrame {
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
                     .addComponent(jLabel4))
                 .addGap(32, 32, 32)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_sohoadon, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cb_kh, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cb_kh, 0, 129, Short.MAX_VALUE)
+                    .addComponent(txt_sohoadon))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(date_giaodich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addComponent(txt_Nhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                        .addComponent(txt_Nhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(date_giaodich, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,6 +265,11 @@ public class FormBanHang extends javax.swing.JFrame {
                 "Số hóa đơn", "Khách hàng", "Nhân viên", "Ngày giao dịch"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -283,16 +299,17 @@ public class FormBanHang extends javax.swing.JFrame {
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         // TODO add your handling code here:
-        Hoadonban hoadonban=new Hoadonban();
-        hoadonban.setSoHoaDon(Integer.parseInt(txt_sohoadon.getText()));
+        Hoadonban hoadonban=new Hoadonban(); 
+       
         hoadonban.setThanhToan(false);
         hoadonban.setNgayHoaDon(date_giaodich.getDate());
-        hoadonban.setMaKH(ketnoi2.findById(Integer.parseInt(cb_kh.getSelectedItem().toString())));
-        hoadonban.setMaNhanVien(ketnoi3.findById(Integer.parseInt(txt_Nhanvien.getText())));
-       
-        ketnoi.addSv(hoadonban);
-        loaddata();
-        clear();
+        hoadonban.setMaKH(ketnoi2.findById(Xuly.layId(cb_kh.getSelectedItem().toString())));
+      hoadonban.setMaNhanVien(ketnoi3.findById((Xuly.layId(txt_Nhanvien.getText()))));
+//          hoadonban.setMaNhanVien(ketnoi3.findById(1));
+          ketnoi.addSv(hoadonban);
+          clear();
+          loaddata();
+          
         
     }//GEN-LAST:event_btn_themActionPerformed
 
@@ -300,10 +317,11 @@ public class FormBanHang extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(txt_sohoadon.getText()!=null){
         Hoadonban hoadonban=new Hoadonban();
+         hoadonban.setSoHoaDon(Integer.parseInt(txt_sohoadon.getText()));
         hoadonban.setThanhToan(false);
         hoadonban.setNgayHoaDon(date_giaodich.getDate());
         hoadonban.setMaKH(ketnoi2.findById(Integer.parseInt(cb_kh.getSelectedItem().toString())));
-        hoadonban.setMaNhanVien(ketnoi3.findById(Integer.parseInt(txt_Nhanvien.getText())));
+        hoadonban.setMaNhanVien(ketnoi3.findById((Xuly.layId(txt_Nhanvien.getText()))));
         ketnoi.sua(hoadonban);
          clear();
         loaddata();
@@ -321,9 +339,46 @@ public class FormBanHang extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         if(txt_timkiem.getText()!=null){
-            ketnoi.timkiem(model,txt_timkiem.getText(),new String[]{"getSoHoaDon","getMaKH.getTenKH","getMaNhanVien.getTenNV","getNgayHoaDon"});
+            String key=txt_timkiem.getText();
+//            ketnoi.timkiem(model,txt_timkiem.getText(),new String[]{"getSoHoaDon","getinfoKhachhang","getinfoNhanvien","getNgayHoaDon"});
+//        String Query="SELECT e FROM Hoadonban  e WHERE e.soHoaDon LIKE :key OR e.ngayHoaDon ";
+//         Map<String, Object> params = new HashMap<>();
+//                params.put("key", "%" + txt_timkiem.getText() + "%");
+        
+        List<Hoadonban> hoadon=ketnoi.getAll();
+        List<Hoadonban> result=hoadon.stream().filter(rootPane->
+                rootPane.getSoHoaDon().toString().contains(key)||
+                rootPane.getNgayHoaDon().toString().contains(key)||
+                rootPane.getMaKH().getMaKH().toString().contains(key)||
+                rootPane.getMaKH().getTenKH().toString().contains(key)||
+                rootPane.getMaNhanVien().getMaNV().toString().contains(key)||
+                rootPane.getMaNhanVien().getTenNV().toString().contains(key)                  
+        ).collect(Collectors.toList());
+        model=ketnoi.xuly(model,new String[]{"getSoHoaDon","getinfoKhachhang","getinfoNhanvien","getNgayHoaDon"}, result);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int row=jTable1.getSelectedRow();
+        if(row>=0){
+            txt_sohoadon.setText(jTable1.getValueAt(row, 0).toString());
+            txt_Nhanvien.setText(jTable1.getValueAt(row, 2).toString());
+            cb_kh.setSelectedItem(jTable1.getValueAt(row, 1).toString());
+            date_giaodich.setDate(DateUtils.parseDate(jTable1.getValueAt(row, 3).toString()));
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btn_chitietActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chitietActionPerformed
+        // TODO add your handling code here:
+           int row=jTable1.getSelectedRow();
+        if(row>=0){
+        Formchitietban form=new Formchitietban(jTable1.getValueAt(row, 0).toString());
+        form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Đảm bảo form sẽ đóng mà không tắt ứng dụng
+        form.setVisible(true);
+       
+        }
+    }//GEN-LAST:event_btn_chitietActionPerformed
 
     /**
      * @param args the command line arguments
