@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Utils;
+import com.toedter.calendar.JDateChooser;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,6 +26,10 @@ public class DateUtils {
             JOptionPane.showMessageDialog(null, "Invalid date format.");
             return null;
         }
+    }
+    
+    public static void setDateToCurrent(JDateChooser dateChooser) {
+        dateChooser.setDate(new Date()); // Đặt ngày hiện tại
     }
     
 }

@@ -7,6 +7,7 @@
 package Service;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -75,8 +76,9 @@ public class Phieumuasach implements Serializable {
         this.soPhieu = soPhieu;
     }
 
-    public Date getNgay() {
-        return ngay;
+    public String getNgay() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        return sdf.format(ngay);
     }
 
     public void setNgay(Date ngay) {
@@ -115,6 +117,14 @@ public class Phieumuasach implements Serializable {
     public void setMaNV(Nhanvien maNV) {
         this.maNV = maNV;
     }
+    
+    public String getInforNhanVien() {
+        if (maNV != null) {
+            return maNV.getMaNV() + " - " + maNV.getTenNV();
+        }
+        return "No Info";
+    }
+
 
     @Override
     public int hashCode() {
