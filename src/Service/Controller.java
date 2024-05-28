@@ -31,6 +31,9 @@ public class Controller<T> {
         entityClass = t;
         emf = Persistence.createEntityManagerFactory("QLBSPU");
     }
+    public Controller(){
+         emf = Persistence.createEntityManagerFactory("QLBSPU");
+    }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -46,7 +49,7 @@ public class Controller<T> {
         }
     }
 
-    public T findById(int id) {
+    public T findById(Object id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(entityClass, id);
@@ -54,12 +57,20 @@ public class Controller<T> {
             em.close();
         }
     }
+    public List<T> findByIdAll(int id){
+        EntityManager em = getEntityManager();
+        try {
+           return  em.createNamedQuery(entityClass.getSimpleName()+".findBySoHoaDon",entityClass).setParameter("soHoaDon", id).getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
-    public void xoa(String id) {
+    public void xoa(Object id) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            T t = findById(Integer.parseInt(id));
+            T t = findById(id);
             if (t != null) {
                 em.remove(em.contains(t) ? t : em.merge(t));
             }
@@ -86,7 +97,8 @@ public class Controller<T> {
             em.getTransaction().begin();
             em.persist(t);
             em.getTransaction().commit();
-        } finally {
+        }
+        finally {
             em.close();
         }
     }
@@ -102,7 +114,7 @@ public class Controller<T> {
         em.close();
     }
 }
-    public DefaultTableModel timkiem(DefaultTableModel model,String keyword,String[] methodNames) {
+    public DefaultTableModel timkiem(DefaultTableModel model,Object keyword,String[] methodNames) {
         EntityManager em = getEntityManager();
         try {
             String queryStr = "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE ";
@@ -125,7 +137,7 @@ public class Controller<T> {
             em.close();
         }
     }
-    DefaultTableModel xuly(DefaultTableModel model,String[] methodNames,List<T> t){
+   public DefaultTableModel xuly(DefaultTableModel model,String[] methodNames,List<T> t){
          Method[] methods = new Method[methodNames.length];
          model.setRowCount(0);
         try {
@@ -147,6 +159,10 @@ public class Controller<T> {
 
         return model;
     }
+    public DefaultTableModel loaddataChitet(DefaultTableModel model,String[] methodNames,String id){
+        List<T> t = findByIdAll(Integer.parseInt(id));
+        return xuly(model,methodNames,t);
+    }
      public DefaultTableModel loaddata(DefaultTableModel model,String[] methodNames){
         List<T> t = getAll();
         return xuly(model,methodNames,t);
@@ -157,4 +173,28 @@ public class Controller<T> {
         }
          model.setRowCount(0);
     }
+//     public List<Object[]> executeJoinQuery(String queryStr, Map<String, Object> parameters) {
+//        EntityManager em = getEntityManager();
+//        try {
+//            TypedQuery<Object[]> query = em.createQuery(queryStr, Object[].class);
+//            for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+//                query.setParameter(entry.getKey(), entry.getValue());
+//            }
+//            return query.getResultList();
+//        } finally {
+//            em.close();
+//        }
+//    }
+//
+//    public DefaultTableModel loadJoinData(DefaultTableModel model, String queryStr, Map<String
+//            , Object> parameters) {
+//        List<Object[]> results = executeJoinQuery(queryStr, parameters);
+//        model.setRowCount(0); // Clear existing rows
+//
+//        for (Object[] row : results) {
+//            model.addRow(row);
+//        }
+//
+//        return model;
+//    }
 }

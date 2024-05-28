@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Chitietphieumua.findAll", query = "SELECT c FROM Chitietphieumua c"),
-    @NamedQuery(name = "Chitietphieumua.findBySoPhieu", query = "SELECT c FROM Chitietphieumua c WHERE c.chitietphieumuaPK.soPhieu = :soPhieu"),
+    @NamedQuery(name = "Chitietphieumua.findBySoHoaDon", query = "SELECT c FROM Chitietphieumua c WHERE c.chitietphieumuaPK.soPhieu = :soHoaDon"),
     @NamedQuery(name = "Chitietphieumua.findByMaSach", query = "SELECT c FROM Chitietphieumua c WHERE c.chitietphieumuaPK.maSach = :maSach"),
     @NamedQuery(name = "Chitietphieumua.findBySoLuong", query = "SELECT c FROM Chitietphieumua c WHERE c.soLuong = :soLuong"),
     @NamedQuery(name = "Chitietphieumua.findByGiaMua", query = "SELECT c FROM Chitietphieumua c WHERE c.giaMua = :giaMua")})
