@@ -49,6 +49,7 @@ public class Formchitietban extends javax.swing.JFrame {
     }
      void clear(){
          ketnoi.clear(new JTextField[]{txt_soluong}, model);
+         cb_sach.setSelectedIndex(-1);
      }
         
     /**
@@ -238,10 +239,8 @@ public class Formchitietban extends javax.swing.JFrame {
         int row=jTable1.getSelectedRow();
         if(row>=0){
          txt_soluong.setText(jTable1.getValueAt(row, 2).toString());
-         Xuly.selectComboBoxItem(jTable1.getValueAt(row, 1).toString(), cb_sach);
-         
-    }
-        
+         cb_sach.setSelectedItem(jTable1.getValueAt(row, 1).toString());
+        }
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed

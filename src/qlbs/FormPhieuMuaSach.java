@@ -31,13 +31,6 @@ public class FormPhieuMuaSach extends javax.swing.JFrame {
     public FormPhieuMuaSach() {
         initComponents();
         model = (DefaultTableModel) jTable1.getModel();
-        loadData();
-    }
-    
-    void loadData () {
-        ketNoi_PMS.loaddata(model, new String[] {"getSoPhieu", "getNgay", 
-            "getTenNCC", "getInforNhanVien", "getThanhToan"});
-        
         List<Nhanvien> nhanVienList = ketNoi_NV.getAll();
         
         // Xóa toàn bộ mục hiện tại trong ComboBox
@@ -47,17 +40,21 @@ public class FormPhieuMuaSach extends javax.swing.JFrame {
         for (Nhanvien nv : nhanVienList) {
             cboMaNV.addItem(nv.getMaNV() + " - " + nv.getTenNV());
         }
+        
+        loadData();
+    }
+    
+    void loadData () {
+        ketNoi_PMS.loaddata(model, new String[] {"getSoPhieu", "getNgay", 
+            "getTenNCC", "getInforNhanVien", "getThanhToan"});
     }
     
     void clear() {
         ketNoi_PMS.clear(new JTextField[] {txtSoPhieu, txtTenNCC}, model);
         cboMaNV.setSelectedIndex(-1);
-        setDateToCurrent(dtpNgayGiaoDich);
+        DateUtils.setDateToCurrent(dtpNgayGiaoDich);
     }
     
-    private void setDateToCurrent(JDateChooser dateChooser) {
-        dateChooser.setDate(new Date()); // Đặt ngày hiện tại
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
