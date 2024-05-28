@@ -153,6 +153,11 @@ public class FormBanHang extends javax.swing.JFrame {
         });
 
         btn_thanhtoan.setText("Thanh toán");
+        btn_thanhtoan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_thanhtoanActionPerformed(evt);
+            }
+        });
 
         txt_sohoadon.setEnabled(false);
 
@@ -380,6 +385,10 @@ public class FormBanHang extends javax.swing.JFrame {
        
         }
     }//GEN-LAST:event_btn_chitietActionPerformed
+
+    private void btn_thanhtoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thanhtoanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_thanhtoanActionPerformed
 
     /**
      * @param args the command line arguments
