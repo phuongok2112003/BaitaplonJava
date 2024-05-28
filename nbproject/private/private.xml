@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/qlbs/FormNhanVien.java</file>
-            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/Service/Controller.java</file>
-            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/Service/Khachhang.java</file>
-            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/qlbs/FormKhachhang.java</file>
-            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/Service/Nhanvien.java</file>
+            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/Service/Chitietphieumua.java</file>
+            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/qlbs/FormPhieuMuaSach.java</file>
+            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/qlbs/FormChiTietPhieuMua.java</file>
+            <file>file:/D:/Hoc%20tap/java/BaiTapLon/test/BaitaplonJava/src/Service/Phieumuasach.java</file>
         </group>
     </open-files>
 </project-private>
