@@ -88,7 +88,20 @@ public class Chitiethoadon implements Serializable {
     public void setSach(Sach sach) {
         this.sach = sach;
     }
-
+    public String gettenSach(){
+        return  getSach().getTenSach();
+    }
+    public String getmaSach(){
+        return getSach().getMaSach().toString();
+    }
+   
+    public String getgia(){
+        return getSach().getGiaBan().toString();
+    }
+    public String gettien(){
+        long tong=getSach().getGiaBan()*soLuong;
+        return String.valueOf(tong);
+    }
     @Override
     public int hashCode() {
         int hash = 0;

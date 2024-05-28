@@ -32,6 +32,7 @@ public class Formchitietban extends javax.swing.JFrame {
     DefaultTableModel model;
     List<Sach> listsach=ketnoi1.getAll();
     String sohoadon;
+     Hoadonban hoadonban;
     public Formchitietban(String sohoadon) {
         initComponents();
         this.sohoadon=sohoadon;
@@ -39,6 +40,13 @@ public class Formchitietban extends javax.swing.JFrame {
         model=(DefaultTableModel) jTable1.getModel();
                 for(Sach sach:listsach){
             cb_sach.addItem(sach.getMaSach()+"-"+sach.getTenSach());
+        }
+        hoadonban=ketnoi2.findById(Integer.parseInt(sohoadon));
+        if(hoadonban.getThanhToan()==true){
+            btn_clear.setEnabled(false);
+            btn_sua.setEnabled(false);
+            btn_them.setEnabled(false);
+            btn_xoa.setEnabled(false);
         }
         loaddata();
         
@@ -220,7 +228,7 @@ public class Formchitietban extends javax.swing.JFrame {
         // TODO add your handling code here:
          try{
          Chitiethoadon chitiethoadon=new Chitiethoadon();
-        chitiethoadon.setHoadonban(ketnoi2.findById(Integer.parseInt(sohoadon)));
+        chitiethoadon.setHoadonban(hoadonban);
         chitiethoadon.setSach(ketnoi1.findById(Xuly.layId(cb_sach.getSelectedItem().toString())));
         chitiethoadon.setSoLuong(Integer.parseInt(txt_soluong.getText()) );
         chitiethoadon.setChitiethoadonPK(new ChitiethoadonPK(Integer.parseInt(sohoadon), Xuly.layId(cb_sach.getSelectedItem().toString())));
