@@ -10,6 +10,7 @@ import Service.Nhanvien;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -35,4 +36,21 @@ public class Xuly {
      public static void mesLoi(Exception e,JFrame t){
            JOptionPane.showMessageDialog(t,e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
      }
+     public static String calculateColumnTotal(JTable table, int columnIndex) {
+        int rowCount = table.getRowCount();
+        int total = 0;
+        for (int i = 0; i < rowCount; i++) {
+            Object value = table.getValueAt(i, columnIndex);
+            if (value instanceof Number) {
+                total += ((Number) value).intValue();
+            } else {
+                try {
+                    total += Integer.parseInt(value.toString());
+                } catch (NumberFormatException e) {
+                    // Bỏ qua các giá trị không phải là số
+                }
+            }
+        }
+        return String.valueOf(total);
+    }
 }
