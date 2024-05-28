@@ -7,6 +7,7 @@
 package Service;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -59,10 +60,10 @@ public class Hoadonban implements Serializable {
     private Nhanvien maNhanVien;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoadonban")
     private Collection<Chitiethoadon> chitiethoadonCollection;
-
+    
     public Hoadonban() {
     }
-
+    
     public Hoadonban(Integer soHoaDon) {
         this.soHoaDon = soHoaDon;
     }
@@ -75,8 +76,9 @@ public class Hoadonban implements Serializable {
         this.soHoaDon = soHoaDon;
     }
 
-    public Date getNgayHoaDon() {
-        return ngayHoaDon;
+    public String getNgayHoaDon() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        return sdf.format(ngayHoaDon);
     }
 
     public void setNgayHoaDon(Date ngayHoaDon) {
@@ -102,7 +104,14 @@ public class Hoadonban implements Serializable {
     public Nhanvien getMaNhanVien() {
         return maNhanVien;
     }
+    public String getinfoNhanvien(){
+        return getMaNhanVien().getMaNV().toString()+"-"+getMaNhanVien().getTenNV().toString();
+    }
+    public  String getinfoKhachhang(){
+        return getMaKH().getMaKH().toString()+"-"+getMaKH().getTenKH().toString();
+    }
 
+    
     public void setMaNhanVien(Nhanvien maNhanVien) {
         this.maNhanVien = maNhanVien;
     }
