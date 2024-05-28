@@ -4,14 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/qlbs/FormSach.java</file>
-            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/Nhanvien.java</file>
             <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/Hoadonban.java</file>
-            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Utils/Xuly.java</file>
-            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/qlbs/FormNhanVien.java</file>
-            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/qlbs/Formchitietban.java</file>
+            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/ChitiethoadonPK.java</file>
+            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/Chitietphieumua.java</file>
+            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/Chitiethoadon.java</file>
             <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/qlbs/FormBanHang.java</file>
             <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Service/Controller.java</file>
-            <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/Utils/DateUtils.java</file>
             <file>file:/C:/Users/X.Phuong/Desktop/QLBS/src/qlbs/FormKhachhang.java</file>
         </group>
     </open-files>
