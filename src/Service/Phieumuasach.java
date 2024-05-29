@@ -120,7 +120,7 @@ public class Phieumuasach implements Serializable {
     
     public String getInforNhanVien() {
         if (maNV != null) {
-            return maNV.getMaNV() + " - " + maNV.getTenNV();
+            return maNV.getMaNV() + "-" + maNV.getTenNV();
         }
         return "No Info";
     }
