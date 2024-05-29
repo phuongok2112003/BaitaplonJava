@@ -6,7 +6,13 @@
 package qlbs;
 import Service.Controller;
 import Service.Chitietphieumua;
+import Service.ChitietphieumuaPK;
+import Service.Phieumuasach;
 import Service.Sach;
+import Utils.DateUtils;
+import Utils.Xuly;
+import java.util.List;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,13 +27,27 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
     Controller<Chitietphieumua> ketNoi_CTPM = new Controller<>(Chitietphieumua.class);
     Controller<Sach> ketNoi_Sach = new Controller<>(Sach.class);
     DefaultTableModel model;
-    public FormChiTietPhieuMua() {
+    String soPhieu;
+    List<Sach> listsach = ketNoi_Sach.getAll();
+    public FormChiTietPhieuMua(String sp) {
         initComponents();
+        this.soPhieu = sp;
+        txtSoPhieu.setText(sp);
         model = (DefaultTableModel) jTable1.getModel();
+         for(Sach sach:listsach){
+            cboMaSach.addItem(sach.getMaSach()+"-"+sach.getTenSach());
+        }
+        loadData();
     }
     
     void loadData() {
-        //ketNoi_CTPM.loaddata(model, new String[] {})
+        ketNoi_CTPM.loaddataChitet(model, new String[] {"getInforPhieuMuaSach", 
+            "getInforSach", "getSoLuong", "getGiaMua"}, soPhieu);
+    }
+    
+    void clear() {
+        cboMaSach.setSelectedIndex(-1);
+        ketNoi_CTPM.clear(new JTextField[] {txtGiaMua, txtSoLuong}, model);
     }
 
     /**
@@ -49,11 +69,11 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
         txtGiaMua = new javax.swing.JTextField();
         txtSoLuong = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
-        btnSua = new javax.swing.JButton();
-        btnXoa = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnSua = new javax.swing.JButton();
+        btnXoa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,7 +102,7 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
 
         txtSoLuong.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
-        btnThem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnThem.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,23 +110,7 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
             }
         });
 
-        btnSua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnSua.setText("Sửa");
-        btnSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaActionPerformed(evt);
-            }
-        });
-
-        btnXoa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnXoa.setText("Xóa");
-        btnXoa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXoaActionPerformed(evt);
-            }
-        });
-
-        btnClear.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnClear.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,10 +123,31 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Số phiếu", "Mã - Tên sách", "Giá mua", "Số lượng"
+                "Số phiếu", "Mã - Tên sách", "Số lượng", "Giá mua"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+
+        btnSua.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
+        btnXoa.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,27 +164,27 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtSoPhieu)
-                            .addComponent(cboMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(188, 188, 188)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cboMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSoPhieu, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(109, 109, 109)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
-                        .addGap(74, 74, 74)
+                        .addGap(64, 64, 64)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtGiaMua)
-                            .addComponent(txtSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
+                            .addComponent(txtGiaMua, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                            .addComponent(txtSoLuong))
                         .addGap(0, 37, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(btnThem)
-                .addGap(32, 32, 32)
+                .addGap(20, 20, 20)
                 .addComponent(btnSua)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(btnXoa)
-                .addGap(37, 37, 37)
+                .addGap(13, 13, 13)
                 .addComponent(btnClear)
                 .addGap(106, 106, 106))
             .addComponent(jScrollPane1)
@@ -183,11 +208,13 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
                     .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnXoa)
-                    .addComponent(btnClear)
-                    .addComponent(btnThem)
-                    .addComponent(btnSua))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnClear)
+                        .addComponent(btnXoa))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnThem)
+                        .addComponent(btnSua)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -195,125 +222,126 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-//        Phieumuasach pms = new Phieumuasach();
-//
-//        pms.setNgay(dtpNgayGiaoDich.getDate());
-//        pms.setTenNCC(txtTenNCC.getText());
-//
-//        Object selectedMaNV = cboMaNV.getSelectedItem();
-//        if (selectedMaNV != null) {
-//            String selectedValue = selectedMaNV.toString();
-//            String[] parts = selectedValue.split(" - ");
-//            if (parts.length >= 1) {
-//                try {
-//                    int maNV = Integer.parseInt(parts[0]);
-//                    Nhanvien nhanVien = new Nhanvien(maNV); // Tạo một đối tượng Nhanvien mới với maNV
-//                    pms.setMaNV(nhanVien);
-//                } catch (NumberFormatException e) {
-//                    JOptionPane.showMessageDialog(this, "Mã nhân viên không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//                    return; // Dừng lại nếu có lỗi
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Dữ liệu nhân viên không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//                return; // Dừng lại nếu không có mã nhân viên hợp lệ được chọn
-//            }
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Vui lòng chọn mã nhân viên.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//            return; // Dừng lại nếu không có mã nhân viên được chọn
-//        }
-//
-//        pms.setThanhToan(false);
-//
-//        ketNoi_PMS.addSv(pms);
-//        clear();
-//        loadData();
+        Chitietphieumua ct_pms = new Chitietphieumua();
+        
+        Phieumuasach pms = new Phieumuasach(Integer.parseInt(txtSoPhieu.getText()));
+        ct_pms.setPhieumuasach(pms);
+
+        Object selectedMaSach = cboMaSach.getSelectedItem();
+        if (selectedMaSach != null) {
+            int maSach = Xuly.layId(selectedMaSach.toString());
+
+            // Tạo và thiết lập khóa chính cho Chitietphieumua
+            ChitietphieumuaPK chitietphieumuaPK = new ChitietphieumuaPK(Integer.parseInt(txtSoPhieu.getText()), maSach);
+            ct_pms.setChitietphieumuaPK(chitietphieumuaPK);
+            ct_pms.setSach(new Sach(maSach));
+        }
+        try {
+            ct_pms.setGiaMua(Long.parseLong(txtGiaMua.getText()));
+            ct_pms.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
+        } 
+        catch (NumberFormatException e) {
+                Xuly.mesLoi(e, this);
+        }
+        ketNoi_CTPM.addSv(ct_pms);
+        clear();
+        loadData();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-//        if (txtSoPhieu.getText() != null) {
-//            Phieumuasach pms = new Phieumuasach();
-//            pms.setSoPhieu(Integer.parseInt(txtSoPhieu.getText()));
-//            pms.setNgay(dtpNgayGiaoDich.getDate());
-//            pms.setTenNCC(txtTenNCC.getText());
-//
-//            Object selectedMaNV = cboMaNV.getSelectedItem();
-//            if (selectedMaNV != null) {
-//                String selectedValue = selectedMaNV.toString();
-//                String[] parts = selectedValue.split(" - ");
-//                if (parts.length >= 1) {
-//                    try {
-//                        int maNV = Integer.parseInt(parts[0]);
-//                        Nhanvien nhanVien = new Nhanvien(maNV); // Tạo một đối tượng Nhanvien mới với maNV
-//                        pms.setMaNV(nhanVien);
-//                    } catch (NumberFormatException e) {
-//                        JOptionPane.showMessageDialog(this, "Mã nhân viên không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//                        return; // Dừng lại nếu có lỗi
-//                    }
-//                } else {
-//                    JOptionPane.showMessageDialog(this, "Dữ liệu nhân viên không hợp lệ.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//                    return; // Dừng lại nếu không có mã nhân viên hợp lệ được chọn
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Vui lòng chọn mã nhân viên.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//                return; // Dừng lại nếu không có mã nhân viên được chọn
-//            }
-//
-//            boolean thanhToan = (boolean) jTable1.getValueAt(jTable1.getSelectedRow(), jTable1.getColumnCount() - 1);
-//            pms.setThanhToan(thanhToan);
-//
-//            ketNoi_PMS.sua(pms);
-//            clear();
-//            loadData();
-//        }
+        if (txtSoPhieu.getText() != null) {
+            Chitietphieumua ct_pms = new Chitietphieumua();
+        
+            Phieumuasach pms = new Phieumuasach(Integer.parseInt(txtSoPhieu.getText()));
+            ct_pms.setPhieumuasach(pms);
+
+            Object selectedMaSach = cboMaSach.getSelectedItem();
+            if (selectedMaSach != null) {
+                int maSach = Xuly.layId(selectedMaSach.toString());
+
+                // Tạo và thiết lập khóa chính cho Chitietphieumua
+                ChitietphieumuaPK chitietphieumuaPK = new ChitietphieumuaPK(Integer.parseInt(txtSoPhieu.getText()), maSach);
+                ct_pms.setChitietphieumuaPK(chitietphieumuaPK);
+                ct_pms.setSach(new Sach(maSach));
+            }
+            try {
+                ct_pms.setGiaMua(Long.parseLong(txtGiaMua.getText()));
+                ct_pms.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
+            } 
+            catch (NumberFormatException e) {
+                    Xuly.mesLoi(e, this);
+            }
+            ketNoi_CTPM.sua(ct_pms);
+            clear();
+            loadData();
+        }
     }//GEN-LAST:event_btnSuaActionPerformed
 
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        clear();
+        loadData();
+    }//GEN-LAST:event_btnClearActionPerformed
+
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-//        if (txtSoPhieu.getText() != null) {
-//            ketNoi_PMS.xoa(txtSoPhieu.getText());
-//            clear();
-//            loadData();
-//        }
+        if (txtSoPhieu.getText() != null && cboMaSach.getSelectedItem() != null) {
+            try{
+                ketNoi_CTPM.xoa(new ChitietphieumuaPK(Integer.parseInt(txtSoPhieu.getText()), 
+                        Xuly.layId(cboMaSach.getSelectedItem().toString())));
+                clear();
+                loadData();
+            } catch(Exception e){
+               Xuly.mesLoi(e, this);
+            }    
+        }
     }//GEN-LAST:event_btnXoaActionPerformed
 
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-//        clear();
-//        loadData();
-    }//GEN-LAST:event_btnClearActionPerformed
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int row = jTable1.getSelectedRow();
+        if (row >= 0 ) {
+            int id = Integer.parseInt(jTable1.getValueAt(row, 0).toString());
+            txtSoPhieu.setText(String.valueOf(id));
+            
+            cboMaSach.setSelectedItem(jTable1.getValueAt(row, 1).toString());
+            
+            txtSoLuong.setText(jTable1.getValueAt(row, 2).toString());
+            txtGiaMua.setText(jTable1.getValueAt(row, 3).toString());
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormChiTietPhieuMua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormChiTietPhieuMua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormChiTietPhieuMua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormChiTietPhieuMua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormChiTietPhieuMua().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(FormChiTietPhieuMua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(FormChiTietPhieuMua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(FormChiTietPhieuMua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(FormChiTietPhieuMua.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new FormChiTietPhieuMua().setVisible(true);
+//            }
+//        });
+//    }  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClear;

@@ -6,6 +6,7 @@
 package qlbs;
 import Service.Nhanvien;
 import Service.Controller;
+import Service.Taikhoan;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import Utils.DateUtils;
@@ -27,7 +28,8 @@ public class FormNhanVien extends javax.swing.JFrame {
      */
     
     Controller<Nhanvien> ketNoi = new Controller<>(Nhanvien.class);
-        DefaultTableModel model;
+    Controller<Taikhoan> ketNoi_TaiKhoan = new Controller<>(Taikhoan.class);
+    DefaultTableModel model;
         
     public FormNhanVien() {
         initComponents();
@@ -266,7 +268,7 @@ public class FormNhanVien extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ NHÂN VIÊN");
 
@@ -307,11 +309,18 @@ public class FormNhanVien extends javax.swing.JFrame {
         nhanvien.setGioiTinh(gioiTinh);
         nhanvien.setDiaChiNV(txtDiaChi.getText());
         nhanvien.setDienThoaiNV(txtSDT.getText());
+        
+        Integer maNV = ketNoi.addNhanVien(nhanvien);
+        
+        if (maNV != null) {
+            Taikhoan taikhoan = new Taikhoan();
+            taikhoan.setTendangnhap(maNV.toString()); 
+            taikhoan.setMatkhau("1234"); // Mật khẩu mặc định
 
-        ketNoi.addSv(nhanvien);
+            ketNoi_TaiKhoan.addSv(taikhoan);
+        } 
         clear();
         loadData();
-        
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
@@ -328,7 +337,6 @@ public class FormNhanVien extends javax.swing.JFrame {
             ketNoi.sua(nhanvien);
             clear();
             loadData();
-            
         }
     }//GEN-LAST:event_btn_suaActionPerformed
 

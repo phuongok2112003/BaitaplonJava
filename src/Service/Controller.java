@@ -102,6 +102,23 @@ public class Controller<T> {
             em.close();
         }
     }
+    
+    public <T> Integer addNhanVien(T entity) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(entity);
+            em.getTransaction().commit();
+            // Ép kiểu entity sang Nhanvien để lấy mã nhân viên
+            if (entity instanceof Nhanvien) {
+                return ((Nhanvien) entity).getMaNV();
+            }
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
    public List<T> executeQuery(String queryStr, Map<String, Object> parameters) {
     EntityManager em = getEntityManager();
     try {
