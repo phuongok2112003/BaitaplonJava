@@ -95,6 +95,30 @@ public class Chitietphieumua implements Serializable {
     public void setSach(Sach sach) {
         this.sach = sach;
     }
+    
+    public String getInforPhieuMuaSach(){
+        return getPhieumuasach().getSoPhieu().toString();
+    }
+    
+    public Integer getMaSach() {
+        return sach.getMaSach();
+    }
+    
+    public String getTenSach() {
+        return sach.getTenSach();
+    }
+    
+    public String tinhTongTien() {
+        long tongTien = sach.getGiaBan() * soLuong;
+        return String.valueOf(tongTien);
+    }
+    
+    public String getInforSach() {
+        if (sach != null) {
+            return sach.getMaSach()+ "-" + sach.getTenSach();
+        }
+        return "No Info";
+    }
 
     @Override
     public int hashCode() {
