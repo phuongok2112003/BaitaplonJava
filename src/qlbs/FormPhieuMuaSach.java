@@ -79,6 +79,7 @@ public class FormPhieuMuaSach extends javax.swing.JFrame {
         txtMaNhanVien = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(500, 230));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -325,7 +326,7 @@ public class FormPhieuMuaSach extends javax.swing.JFrame {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         if (txtSoPhieu.getText() != null) {
-            ketNoi_PMS.xoa(txtSoPhieu.getText());
+            ketNoi_PMS.xoa(Integer.parseInt(txtSoPhieu.getText()));
             clear();
             loadData();
         }

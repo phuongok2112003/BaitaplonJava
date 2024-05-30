@@ -65,7 +65,7 @@ public class FormBanHang extends javax.swing.JFrame {
         DateUtils.setDateToCurrent(date_giaodich);
     }
     void loaddata(){
-        txt_Nhanvien.setText("4-a");
+        txt_Nhanvien.setText("4-Nguyễn Văn Cường");
 
         model=ketnoi.loaddata(model,new String[]{"getSoHoaDon","getinfoKhachhang","getinfoNhanvien","getNgayHoaDon"});
     }
@@ -117,6 +117,7 @@ public class FormBanHang extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(500, 100));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -245,18 +246,20 @@ public class FormBanHang extends javax.swing.JFrame {
                                         .addComponent(jButton2))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(btn_them)
                                                 .addGap(26, 26, 26)
-                                                .addComponent(btn_sua)
+                                                .addComponent(btn_sua))
+                                            .addComponent(btn_chitiet))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
                                                 .addComponent(btn_xoa)
                                                 .addGap(26, 26, 26)
                                                 .addComponent(jButton1))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(btn_chitiet)
-                                                .addGap(40, 40, 40)
+                                                .addGap(27, 27, 27)
                                                 .addComponent(btn_thanhtoan)
                                                 .addGap(32, 32, 32)))
                                         .addGap(41, 41, 41))))
@@ -289,14 +292,9 @@ public class FormBanHang extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cb_kh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(date_giaodich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(btn_chitiet))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(date_giaodich, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_them)
@@ -304,7 +302,9 @@ public class FormBanHang extends javax.swing.JFrame {
                             .addComponent(btn_xoa)
                             .addComponent(jButton1))
                         .addGap(18, 18, 18)
-                        .addComponent(btn_thanhtoan)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_thanhtoan)
+                            .addComponent(btn_chitiet))))
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

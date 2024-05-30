@@ -75,6 +75,7 @@ public class FormDangNhap extends javax.swing.JFrame {
         txtPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(700, 300));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -151,7 +152,24 @@ public class FormDangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        if(!txtTenDangNhap.getText().isEmpty()) {
+            String tenDN = txtTenDangNhap.getText();
+            String matKhau = new String(txtPass.getPassword());
+        
+            Taikhoan taikhoan = ketNoi.findById(tenDN);
+            if (taikhoan != null) {
+                // Nếu tên đăng nhập tồn tại, đổi mật khẩu
+                Taikhoan tk = new Taikhoan();
+                tk.setTendangnhap(tenDN);
+                tk.setMatkhau(matKhau);
+                ketNoi.sua(tk);
+                JOptionPane.showMessageDialog(this, "Sửa mật khẩu thành công!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Tên đăng nhập không tồn tại!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Yêu cầu nhập tên đăng nhập!");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

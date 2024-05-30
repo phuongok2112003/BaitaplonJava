@@ -84,10 +84,11 @@ public class Formchitietban extends javax.swing.JFrame {
         btn_clear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(500, 200));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("CHI TIẾT PHIẾU MUA");
+        jLabel1.setText("CHI TIẾT HÓA ĐƠN");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("Số phiếu");
@@ -212,6 +213,8 @@ public class Formchitietban extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        jLabel1.getAccessibleContext().setAccessibleName("CHI TIẾT HÓA ĐƠN");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
