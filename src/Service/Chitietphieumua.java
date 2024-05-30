@@ -109,7 +109,7 @@ public class Chitietphieumua implements Serializable {
     }
     
     public String tinhTongTien() {
-        long tongTien = sach.getGiaBan() * soLuong;
+        long tongTien = giaMua * soLuong;
         return String.valueOf(tongTien);
     }
     

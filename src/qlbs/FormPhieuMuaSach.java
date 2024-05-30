@@ -39,8 +39,7 @@ public class FormPhieuMuaSach extends javax.swing.JFrame {
     }
     
     void loadData () {
-        txtMaNhanVien.setText("4-Nguyễn Văn A");
-        
+        txtMaNhanVien.setText(Xuly.taiKhoanNhanVien.getMaNV() + "-" + Xuly.taiKhoanNhanVien.getTenNV());
         ketNoi_PMS.loaddata(model, new String[] {"getSoPhieu", "getNgay", 
             "getTenNCC", "getInforNhanVien", "getThanhToan"});
     }

@@ -42,7 +42,7 @@ public class FormBanHang extends javax.swing.JFrame {
     public FormBanHang() {
         initComponents();
         model=(DefaultTableModel) jTable1.getModel();
-       txt_Nhanvien.setText("3-a");
+       
                for(Khachhang khach:listkhach){
 //            cb_kh.addItem(khach.getMaKH()+"-"+khach.getTenKH());
             cb_kh.addItem(khach.getMaKH()+"-"+khach.getTenKH());
@@ -65,7 +65,7 @@ public class FormBanHang extends javax.swing.JFrame {
         DateUtils.setDateToCurrent(date_giaodich);
     }
     void loaddata(){
-        txt_Nhanvien.setText("4-Nguyễn Văn Cường");
+        txt_Nhanvien.setText(Xuly.taiKhoanNhanVien.getMaNV() + "-" + Xuly.taiKhoanNhanVien.getTenNV());
 
         model=ketnoi.loaddata(model,new String[]{"getSoHoaDon","getinfoKhachhang","getinfoNhanvien","getNgayHoaDon"});
     }
@@ -214,6 +214,7 @@ public class FormBanHang extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
 
         txt_Nhanvien.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_Nhanvien.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

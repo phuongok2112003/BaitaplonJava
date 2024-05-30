@@ -5,7 +5,9 @@
  */
 package qlbs;
 import Service.Controller;
+import Service.Nhanvien;
 import Service.Taikhoan;
+import Utils.Xuly;
 import javax.swing.JOptionPane;
 /**
  *
@@ -17,6 +19,7 @@ public class FormDangNhap extends javax.swing.JFrame {
      * Creates new form FormDangNhap
      */
     Controller<Taikhoan> ketNoi = new Controller<>(Taikhoan.class);
+    Controller<Nhanvien> ketNoi_NhanVien = new Controller<>(Nhanvien.class);
     public FormDangNhap() {
         initComponents();
         
@@ -38,9 +41,12 @@ public class FormDangNhap extends javax.swing.JFrame {
             if (taikhoan.getMatkhau().equals(matKhau)) {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
                 // Thực hiện hành động tiếp theo sau khi đăng nhập thành công
-
-
-
+                Menu newMenu = new Menu();
+                newMenu.setVisible(true);
+                Xuly.taiKhoanNhanVien = ketNoi_NhanVien.findById(Integer.parseInt(tenDN));
+                
+                this.setVisible(false);
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Sai mật khẩu!");
             }
