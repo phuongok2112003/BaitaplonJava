@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -108,6 +109,11 @@ public class Formthongkedausach extends javax.swing.JFrame {
         });
 
         jButton2.setText("IN");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,6 +165,20 @@ public class Formthongkedausach extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+     try{
+         
+        boolean complete = jTable1.print();
+            if (complete) {
+                JOptionPane.showMessageDialog(null, "In thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "In bị hủy!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
+     }catch(Exception ex){
+          JOptionPane.showMessageDialog(null, ex.getMessage(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+     }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
