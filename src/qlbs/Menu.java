@@ -23,11 +23,22 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
     }
-    private void openChildForm(JFrame form) {
-        form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Đảm bảo form sẽ đóng mà không tắt ứng dụng
-        form.setVisible(true);
-        
-    }
+   private void openChildForm(JFrame childForm) {
+    JFrame parentForm = this;
+
+    childForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Đảm bảo form sẽ đóng mà không tắt ứng dụng
+
+    // Thêm WindowListener để lắng nghe sự kiện đóng của form con
+    childForm.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            parentForm.setVisible(true); // Hiển thị lại form cha khi form con đóng
+        }
+    });
+
+    childForm.setVisible(true);
+    parentForm.setVisible(false);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,16 +72,17 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 964, Short.MAX_VALUE)
+            .addGap(0, 1011, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
+            .addGap(0, 639, Short.MAX_VALUE)
         );
 
         jMenuBar2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -150,6 +162,11 @@ public class Menu extends javax.swing.JFrame {
         jMenu6.add(jMenuItem6);
 
         jMenuItem7.setText("Thống kế số lượng sách");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu6.add(jMenuItem7);
 
         jMenuBar2.add(jMenu6);
@@ -179,7 +196,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
+      Formthongkedoanhthuloinhuan form=new Formthongkedoanhthuloinhuan();
+        openChildForm(form);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
@@ -208,10 +226,16 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        FormBanHang form=new FormBanHang();
+     FormBanHang form =new FormBanHang();
         openChildForm(form);
+    
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+           
+        Formthongkedausach form=new Formthongkedausach();
+        openChildForm(form);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments

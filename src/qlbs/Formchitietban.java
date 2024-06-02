@@ -84,6 +84,7 @@ public class Formchitietban extends javax.swing.JFrame {
         btn_clear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Form Chi Tiết Hóa Đon");
         setLocation(new java.awt.Point(500, 200));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -214,20 +215,27 @@ public class Formchitietban extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("CHI TIẾT HÓA ĐƠN");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
         // TODO add your handling code here:
+       
         try{
+ 
          Chitiethoadon chitiethoadon=new Chitiethoadon();
         chitiethoadon.setHoadonban(ketnoi2.findById(Integer.parseInt(sohoadon)));
         chitiethoadon.setSach(ketnoi1.findById(Xuly.layId(cb_sach.getSelectedItem().toString())));
         chitiethoadon.setSoLuong(Integer.parseInt(txt_soluong.getText()) );
         chitiethoadon.setChitiethoadonPK(new ChitiethoadonPK(Integer.parseInt(sohoadon), Xuly.layId(cb_sach.getSelectedItem().toString())));
-        ketnoi.addSv(chitiethoadon); 
+        
+         if(ketnoi1.findById(Xuly.layId(cb_sach.getSelectedItem()
+                .toString())).getSoLuong()-Integer.parseInt(txt_soluong.getText())<0){
+               JOptionPane.showMessageDialog(this, "Không đủ sách");
+            return;
+           
+        }
+         ketnoi.addSv(chitiethoadon); 
          clear();
         loaddata();
         }catch(Exception e){

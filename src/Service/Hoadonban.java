@@ -8,6 +8,8 @@ package Service;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -80,7 +82,19 @@ public class Hoadonban implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         return sdf.format(ngayHoaDon);
     }
-
+    public LocalDate getNgayHoaDondate() {
+       
+        return  ngayHoaDon.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+    public Long gettongtien(){
+        long tong=0;
+        for(Chitiethoadon chitiet:chitiethoadonCollection){  
+            tong+=chitiet.getSach().getGiaBan()*chitiet.getSoLuong();
+        }
+        return tong;
+    }
     public void setNgayHoaDon(Date ngayHoaDon) {
         this.ngayHoaDon = ngayHoaDon;
     }

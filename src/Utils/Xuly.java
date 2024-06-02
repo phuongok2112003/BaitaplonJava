@@ -33,6 +33,7 @@ public class Xuly {
             }
         }
     }
+     public static Nhanvien infoNhanvien;
      public static void mesLoi(Exception e,JFrame t){
            JOptionPane.showMessageDialog(t,e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
      }

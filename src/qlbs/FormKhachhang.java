@@ -82,6 +82,7 @@ public class FormKhachhang extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Form Khách Hàng");
         setLocation(new java.awt.Point(500, 100));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -335,7 +336,7 @@ public class FormKhachhang extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(txt_timkiem.getText()!=""){
             
-            ketnoi.timkiem(model, txt_timkiem.getText(), new String[]{"getMaKH","getTenKH", "getDiaChiKh",
+           model= ketnoi.timkiem(model, txt_timkiem.getText(), new String[]{"getMaKH","getTenKH", "getDiaChiKh",
          "getDienThoaiKH", "getNgaySinh", "getGioiTinh"});
    
         }

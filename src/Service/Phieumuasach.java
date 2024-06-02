@@ -8,6 +8,8 @@ package Service;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -79,8 +81,13 @@ public class Phieumuasach implements Serializable {
     public String getNgay() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         return sdf.format(ngay);
+    } 
+    public LocalDate getNgaydate() {
+       
+        return  ngay.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
-
     public void setNgay(Date ngay) {
         this.ngay = ngay;
     }
@@ -96,7 +103,14 @@ public class Phieumuasach implements Serializable {
     public Boolean getThanhToan() {
         return thanhToan;
     }
-
+    public long gettongtien(){
+        long tong=0;
+        for(Chitietphieumua chitiet:chitietphieumuaCollection){
+            tong+=chitiet.getGiaMua()*chitiet.getSoLuong();
+        }
+        
+        return tong;
+    }
     public void setThanhToan(Boolean thanhToan) {
         this.thanhToan = thanhToan;
     }

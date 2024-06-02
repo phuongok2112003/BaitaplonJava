@@ -41,8 +41,9 @@ public class FormBanHang extends javax.swing.JFrame {
      DefaultTableModel model;
     public FormBanHang() {
         initComponents();
+       
         model=(DefaultTableModel) jTable1.getModel();
-       txt_Nhanvien.setText("3-a");
+      
                for(Khachhang khach:listkhach){
 //            cb_kh.addItem(khach.getMaKH()+"-"+khach.getTenKH());
             cb_kh.addItem(khach.getMaKH()+"-"+khach.getTenKH());
@@ -61,12 +62,26 @@ public class FormBanHang extends javax.swing.JFrame {
     void clear(){
         
         cb_kh.setSelectedIndex(-1);
-        ketnoi.clear(new JTextField[]{txt_sohoadon}, model);
+        ketnoi.clear(new JTextField[]{txt_sohoadon,txt_timkiem}, model);
         DateUtils.setDateToCurrent(date_giaodich);
     }
     void loaddata(){
-        txt_Nhanvien.setText("4-Nguyễn Văn Cường");
-
+         if( Xuly.infoNhanvien!=null){
+            txt_Nhanvien.setText(Xuly.infoNhanvien.getMaNV()+"-"+Xuly.infoNhanvien.getTenNV());
+       }
+       else{
+           txt_sohoadon.setEnabled(false);
+           date_giaodich.setEnabled(false);
+           txt_timkiem.setEditable(false);
+           cb_kh.setEnabled(false);
+           btn_sua.setEnabled(false);
+           btn_them.setEnabled(false);
+           btn_xoa.setEnabled(false);
+           btn_thanhtoan.setEnabled(false);
+           btn_chitiet.setEnabled(false);
+           
+       }
+        clear();
         model=ketnoi.loaddata(model,new String[]{"getSoHoaDon","getinfoKhachhang","getinfoNhanvien","getNgayHoaDon"});
     }
     @SuppressWarnings("unchecked")
@@ -117,6 +132,7 @@ public class FormBanHang extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Form Hóa Đơn");
         setLocation(new java.awt.Point(500, 100));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -214,6 +230,7 @@ public class FormBanHang extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
 
         txt_Nhanvien.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txt_Nhanvien.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -348,7 +365,7 @@ public class FormBanHang extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        clear();
+     
         loaddata();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -376,30 +393,36 @@ public class FormBanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_chitietActionPerformed
 
     private void btn_suaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suaActionPerformed
-        // TODO add your handling code here:
+       try{
         if(txt_sohoadon.getText()!=null){
             Hoadonban hoadonban=new Hoadonban();
             hoadonban.setSoHoaDon(Integer.parseInt(txt_sohoadon.getText()));
             hoadonban.setThanhToan(false);
             hoadonban.setNgayHoaDon(date_giaodich.getDate());
-            hoadonban.setMaKH(ketnoi2.findById(Integer.parseInt(cb_kh.getSelectedItem().toString())));
+            hoadonban.setMaKH(ketnoi2.findById(Xuly.layId(cb_kh.getSelectedItem().toString())));
             hoadonban.setMaNhanVien(ketnoi3.findById((Xuly.layId(txt_Nhanvien.getText()))));
             ketnoi.sua(hoadonban);
-            clear();
+            
             loaddata();
 
-        }
+        }}
+       catch(Exception ex){
+            Xuly.mesLoi(ex, this);
+      }
     }//GEN-LAST:event_btn_suaActionPerformed
 
     private void btn_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaActionPerformed
-        // TODO add your handling code here:
-        if(txt_sohoadon.getText()!=null){
-            ketnoi.xoa(txt_sohoadon.getText());
-        }
+       try{
+        if(!txt_sohoadon.getText().isEmpty()){
+            ketnoi.xoa(Integer.parseInt(txt_sohoadon.getText()));
+            loaddata();
+        }}catch(Exception ex){
+            Xuly.mesLoi(ex, this);
+      }
     }//GEN-LAST:event_btn_xoaActionPerformed
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
-        // TODO add your handling code here:
+      try{
         Hoadonban hoadonban=new Hoadonban();
 
         hoadonban.setThanhToan(false);
@@ -408,9 +431,11 @@ public class FormBanHang extends javax.swing.JFrame {
         hoadonban.setMaNhanVien(ketnoi3.findById((Xuly.layId(txt_Nhanvien.getText()))));
         //          hoadonban.setMaNhanVien(ketnoi3.findById(1));
         ketnoi.addSv(hoadonban);
-        clear();
+       
         loaddata();
-
+      }catch(Exception ex){
+            Xuly.mesLoi(ex, this);
+      }
     }//GEN-LAST:event_btn_themActionPerformed
 
     /**

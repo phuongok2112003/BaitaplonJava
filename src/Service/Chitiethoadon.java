@@ -108,7 +108,10 @@ public class Chitiethoadon implements Serializable {
         hash += (chitiethoadonPK != null ? chitiethoadonPK.hashCode() : 0);
         return hash;
     }
-
+    public long gettongtien(){
+        long tong;
+        return sach.getGiaBan()*soLuong;
+    }
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

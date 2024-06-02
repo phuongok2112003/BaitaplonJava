@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -131,29 +132,29 @@ public class Controller<T> {
         em.close();
     }
 }
-    public DefaultTableModel timkiem(DefaultTableModel model,Object keyword,String[] methodNames) {
-        EntityManager em = getEntityManager();
+    public DefaultTableModel timkiem(DefaultTableModel model,String keyword,String[] methodNames) {
+        List<T> list=getAll();
+        List<T> t=list.stream().filter(a-> containsKey(a, keyword, methodNames)).collect(Collectors.toList());
+        
+         return xuly(model,methodNames,t);
+    }
+    
+     private  boolean containsKey(T item, String key, String[] methodNames) {
         try {
-            String queryStr = "SELECT e FROM " + entityClass.getSimpleName() + " e WHERE ";
-            Field[] fields = entityClass.getDeclaredFields();
-            List<String> conditions = new ArrayList<>();
-
-            for (Field field : fields) {
-                if (!field.getName().equals("serialVersionUID") && !field.getName().equals("enrollmentCollection")
-                        &&!Collection.class.isAssignableFrom(field.getType())) {
-                    conditions.add("e." + field.getName() + " LIKE :keyword");
+            for (String methodName : methodNames) {
+                Method method = entityClass.getMethod(methodName);
+                Object value = method.invoke(item);
+                if (value != null && value.toString().contains(key)) {
+                    return true;
                 }
             }
-            queryStr += String.join(" OR ", conditions);
-
-            TypedQuery<T> query = em.createQuery(queryStr, entityClass);
-            query.setParameter("keyword", "%" + keyword + "%");
-            List<T> t= query.getResultList();
-            return xuly(model,methodNames,t);
-        } finally {
-            em.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return false;
     }
+    
+    
    public DefaultTableModel xuly(DefaultTableModel model,String[] methodNames,List<T> t){
          Method[] methods = new Method[methodNames.length];
          model.setRowCount(0);

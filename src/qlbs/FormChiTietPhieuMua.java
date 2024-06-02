@@ -41,7 +41,7 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
     }
     
     void loadData() {
-        ketNoi_CTPM.loaddataChitet(model, new String[] {"getInforPhieuMuaSach", 
+       model= ketNoi_CTPM.loaddataChitet(model, new String[] {"getInforPhieuMuaSach", 
             "getInforSach", "getSoLuong", "getGiaMua"}, soPhieu);
     }
     
@@ -62,7 +62,7 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtSoPhieu = new javax.swing.JTextField();
-        cboMaSach = new javax.swing.JComboBox<>();
+        cboMaSach = new javax.swing.JComboBox<String>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -76,6 +76,7 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
         btnXoa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Form Chi Tiết Phiếu mua");
         setLocation(new java.awt.Point(500, 100));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -226,7 +227,7 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
         Chitietphieumua ct_pms = new Chitietphieumua();
         
         Phieumuasach pms = new Phieumuasach(Integer.parseInt(txtSoPhieu.getText()));
-        ct_pms.setPhieumuasach(pms);
+      ct_pms.setPhieumuasach(pms);
 
         Object selectedMaSach = cboMaSach.getSelectedItem();
         if (selectedMaSach != null) {
@@ -235,7 +236,7 @@ public class FormChiTietPhieuMua extends javax.swing.JFrame {
             // Tạo và thiết lập khóa chính cho Chitietphieumua
             ChitietphieumuaPK chitietphieumuaPK = new ChitietphieumuaPK(Integer.parseInt(txtSoPhieu.getText()), maSach);
             ct_pms.setChitietphieumuaPK(chitietphieumuaPK);
-            ct_pms.setSach(new Sach(maSach));
+           ct_pms.setSach(new Sach(maSach));
         }
         try {
             ct_pms.setGiaMua(Long.parseLong(txtGiaMua.getText()));

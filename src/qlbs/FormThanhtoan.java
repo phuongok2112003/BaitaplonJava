@@ -92,6 +92,7 @@ public class FormThanhtoan extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Form Thanh Toán");
         setLocation(new java.awt.Point(450, 200));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(

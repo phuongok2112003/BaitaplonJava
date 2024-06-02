@@ -35,11 +35,25 @@ public class FormPhieuMuaSach extends javax.swing.JFrame {
     public FormPhieuMuaSach() {
         initComponents();
         model = (DefaultTableModel) jTable1.getModel();
+      
         loadData();
     }
     
     void loadData () {
-        txtMaNhanVien.setText("4-Nguyễn Văn A");
+        if( Xuly.infoNhanvien!=null){
+            txtMaNhanVien.setText(Xuly.infoNhanvien.getMaNV()+"-"+Xuly.infoNhanvien.getTenNV());
+       }
+       else{
+           txtSoPhieu.setEnabled(false);
+           dtpNgayGiaoDich.setEnabled(false);
+           txtTenNCC.setEditable(false);
+         btnSua.setEnabled(false);
+           btnThem.setEnabled(false);
+           btnXoa.setEnabled(false);
+           btnChiTietPhieu.setEnabled(false);
+           btnThanhToan.setEnabled(false);
+           
+       }
         
         ketNoi_PMS.loaddata(model, new String[] {"getSoPhieu", "getNgay", 
             "getTenNCC", "getInforNhanVien", "getThanhToan"});
@@ -79,6 +93,7 @@ public class FormPhieuMuaSach extends javax.swing.JFrame {
         txtMaNhanVien = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Form Phiếu Mua Sách");
         setLocation(new java.awt.Point(500, 230));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
