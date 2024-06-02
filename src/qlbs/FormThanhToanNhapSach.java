@@ -124,6 +124,7 @@ public class FormThanhToanNhapSach extends javax.swing.JFrame {
         jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Form Thanh Toán Nhập Sách");
         setLocation(new java.awt.Point(500, 230));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N

@@ -81,6 +81,7 @@ public class FormSach extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Form Sách");
         setLocation(new java.awt.Point(500, 100));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -366,8 +367,8 @@ public class FormSach extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_theloaiActionPerformed
 
     private void btn_timkiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timkiemActionPerformed
-       if(txt_timkiem.getText()!=""){
-         model=ketnoi.timkiem(model,txt_timkiem.getText(),new String[]{"getMaSach","getTenSach","getTheLoai","getTacgia"
+       if(!txt_timkiem.getText().isEmpty()){
+       model=ketnoi.timkiem(model,txt_timkiem.getText(), new String[]{"getMaSach","getTenSach","getTheLoai","getTacgia"
              , "getNxb","getNamXB","getSoLuong","getGiaBan"});
          
            

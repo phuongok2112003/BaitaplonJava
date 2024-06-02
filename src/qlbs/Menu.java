@@ -23,11 +23,22 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
     }
-    private void openChildForm(JFrame form) {
-        form.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Đảm bảo form sẽ đóng mà không tắt ứng dụng
-        form.setVisible(true);
-        
-    }
+   private void openChildForm(JFrame childForm) {
+    JFrame parentForm = this;
+
+    childForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Đảm bảo form sẽ đóng mà không tắt ứng dụng
+
+    // Thêm WindowListener để lắng nghe sự kiện đóng của form con
+    childForm.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            parentForm.setVisible(true); // Hiển thị lại form cha khi form con đóng
+        }
+    });
+
+    childForm.setVisible(true);
+    parentForm.setVisible(false);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,6 +53,7 @@ public class Menu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -49,6 +61,9 @@ public class Menu extends javax.swing.JFrame {
         jMenu5 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -57,21 +72,28 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(500, 200));
+        setTitle("Menu");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 963, Short.MAX_VALUE)
+            .addGap(0, 1011, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 574, Short.MAX_VALUE)
+            .addGap(0, 639, Short.MAX_VALUE)
         );
 
         jMenuBar2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuBar2.setPreferredSize(new java.awt.Dimension(580, 50));
+
+        jMenu3.setText("Trang chủ");
+        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenu3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenu3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jMenu3.setPreferredSize(new java.awt.Dimension(100, 25));
+        jMenuBar2.add(jMenu3);
 
         jMenu4.setText("Quản lý danh mục");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -128,6 +150,27 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar2.add(jMenu5);
 
+        jMenu6.setText("Thông kế báo cáo");
+        jMenu6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jMenuItem6.setText("Thống kê doanh thu");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem6);
+
+        jMenuItem7.setText("Thống kế số lượng sách");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem7);
+
+        jMenuBar2.add(jMenu6);
+
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,6 +194,11 @@ public class Menu extends javax.swing.JFrame {
       
        
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+      Formthongkedoanhthuloinhuan form=new Formthongkedoanhthuloinhuan();
+        openChildForm(form);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
         // TODO add your handling code here:
@@ -178,10 +226,16 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        FormBanHang form=new FormBanHang();
+     FormBanHang form =new FormBanHang();
         openChildForm(form);
+    
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+           
+        Formthongkedausach form=new Formthongkedausach();
+        openChildForm(form);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,8 +275,10 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -230,6 +286,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
