@@ -54,4 +54,6 @@ public class Xuly {
         }
         return String.valueOf(total);
     }
+     
+    public static Nhanvien taiKhoanNhanVien;
 }
