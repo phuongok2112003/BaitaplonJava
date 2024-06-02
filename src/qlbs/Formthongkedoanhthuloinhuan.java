@@ -86,7 +86,7 @@ public class Formthongkedoanhthuloinhuan extends javax.swing.JFrame {
             long tongTienTrongThang = phieumuaTrongThang.stream()
                 .mapToLong(Phieumuasach::gettongtien)
                 .sum();
-            doanhthuTheoThang.put(thang, tongTienTrongThang);
+            chiphiTheoThang.put(thang, tongTienTrongThang);
         }
   
         List<Integer> allMonths = IntStream.rangeClosed(1, 12).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
