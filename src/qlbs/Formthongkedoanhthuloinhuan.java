@@ -23,6 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -86,7 +87,7 @@ public class Formthongkedoanhthuloinhuan extends javax.swing.JFrame {
             long tongTienTrongThang = phieumuaTrongThang.stream()
                 .mapToLong(Phieumuasach::gettongtien)
                 .sum();
-            doanhthuTheoThang.put(thang, tongTienTrongThang);
+            chiphiTheoThang.put(thang, tongTienTrongThang);
         }
   
         List<Integer> allMonths = IntStream.rangeClosed(1, 12).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
@@ -144,6 +145,11 @@ public class Formthongkedoanhthuloinhuan extends javax.swing.JFrame {
         jLabel1.setText("Tổng tiền");
 
         jButton2.setText("IN");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,6 +225,20 @@ public class Formthongkedoanhthuloinhuan extends javax.swing.JFrame {
        }
        txt_tong.setText( String.valueOf(calculateColumnTotal(jTable1, 3)) );
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       try{
+         
+        boolean complete = jTable1.print();
+            if (complete) {
+                JOptionPane.showMessageDialog(null, "In thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "In bị hủy!", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            }
+     }catch(Exception ex){
+          JOptionPane.showMessageDialog(null, ex.getMessage(), "Thông báo", JOptionPane.WARNING_MESSAGE);
+     }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

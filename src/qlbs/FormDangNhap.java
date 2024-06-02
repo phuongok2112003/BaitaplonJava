@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
 import java.util.Date;
 import java.util.Map;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 /**
  *
@@ -50,7 +51,22 @@ public class FormDangNhap extends javax.swing.JFrame {
             }
         });
     }
-    
+     private void openChildForm(JFrame childForm) {
+    JFrame parentForm = this;
+
+    childForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Đảm bảo form sẽ đóng mà không tắt ứng dụng
+
+    // Thêm WindowListener để lắng nghe sự kiện đóng của form con
+    childForm.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            parentForm.setVisible(true); // Hiển thị lại form cha khi form con đóng
+        }
+    });
+
+    childForm.setVisible(true);
+    parentForm.setVisible(false);
+}
     void check() {
         if(checkRong() == false) {
             JOptionPane.showMessageDialog(this, "Yêu cầu nhập đủ thông tin");
@@ -69,8 +85,7 @@ public class FormDangNhap extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
                 // Thực hiện hành động tiếp theo sau khi đăng nhập thành công
                 Menu newMenu = new Menu();
-                newMenu.setVisible(true);
-                 this.setVisible(false);
+               openChildForm(newMenu);
                    Xuly.infoNhanvien=null;
         }
         
@@ -80,7 +95,7 @@ public class FormDangNhap extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
                 // Thực hiện hành động tiếp theo sau khi đăng nhập thành công
                 Menu newMenu = new Menu();
-                newMenu.setVisible(true);
+               openChildForm(newMenu);
                 Xuly.infoNhanvien = ketnoi1.findById(Integer.parseInt(txtMaNV.getText()));
                 
                 this.setVisible(false);
