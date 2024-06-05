@@ -25,12 +25,13 @@ import javax.swing.table.DefaultTableModel;
  * @author X.Phuong
  */
 public class Controller<T> {
-    private Class<T> entityClass;
+    private Class<T> entityClass;//entityClass là một biến kiểu Class<T> đại diện cho kiểu lớp
     private static EntityManagerFactory emf;
-
+//EntityManagerFactory là một giao diện trong JPA, được sử dụng để tạo ra các đối tượng EntityManager
     public Controller(Class<T> t) {
         entityClass = t;
-        emf = Persistence.createEntityManagerFactory("QLBSPU");
+        emf = Persistence.createEntityManagerFactory("QLBSPU");//Persistence.createEntityManagerFactory("QLBSPU") 
+        //tạo ra một EntityManagerFactory dựa trên cấu hình được định nghĩa trong tệp persistence.xml, với đơn vị lưu trữ có tên là "QLBSPU".
     }
     public Controller(){
          emf = Persistence.createEntityManagerFactory("QLBSPU");
